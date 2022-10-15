@@ -1,0 +1,26 @@
+This makefile creates a "cipher.a" library that contains:
+
+1. aes_cbc.o
+2. augustus.o
+3. caesar.o
+4. strings.o
+
+DEPENDENCIES:
+
+1. "strings_tester" (the executable program) is dependent on:
+	* "strings_tester.c"
+	* "aes_cbc.h"
+	* "augustus.h"
+	* "caesar.h"
+	* "strings.h"
+	* "cipher.a"
+
+2. "cipher.a" is dependent on:
+	* "aes_cbc.o"
+	* "augustus.o"
+	* "caesar.o"
+	* "strings.o"
+
+3. "aes_cbc.o" is dependent on:
+	* "aes_cbc.c"
+	* "aes_cbc.h"
