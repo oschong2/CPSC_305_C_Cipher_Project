@@ -1,28 +1,89 @@
-1. How do we decrypt using the Caesar cipher?
+MY QUESTIONS FOR GUSTY ON 10/19:
 
-enChar = char MINUS key;
+	1. How do we decrypt using the Caesar cipher?
 
-decryption = encryption with decKey = 26 - encKey
+		To decrypt using the Caesar cipher, you SUBTRACT the key from each character ASCII value.
+			* decryptedCharacter =  encryptedCharacter - key;
+
+		OR, you can just do encryption, but subtract the key from 26 to get the "decryption key"
+			* decryptionKey = 26 - key
+			* decryptedCharacter = caesar_encrypt_char(encryptedCharacter, decryptionKey)
 
 
-2. If the key to a Caesar cipher is a string, what do u mean by "XOR" the bits? Does this yield an int?
-
-if key = "Owen", encKey = 'o' ^ 'w' ^ 'e' ^ 'n';
-
-k = 0
-Write a loop with code k ^= s[c]
+	2. If the key to a Caesar cipher is a string or contains character, what do u mean by "XOR" the bits? Does this yield an integer key?
+	
+		YES! This is what "convert_key(char *key)" function does.
+		
+		Code for "convert_key(char *key)":
+		
+		#include <ctype.h> //Allows us to use isDigit(char c) to check if the character "c" is a digit (0-9).
+		
+		//Create an int "isNumber" to store whether the key is a number (1, true, the key is a number) or not (0, false, the key is NOT a number)
+		int isNumber = 1;
+		
+		//Iterate through "*key" to check characters that are NOT digits (0-9).
+		//We can find lengthOfKey later via a for loop
+		for(int i = 0; i < lengthOfKey; i++) {
+		
+			//If the character is NOT a digit (meaning it's a character),
+			if(isDigit(key[i]) == 0) {
+			
+				//Break the loop, since we know we already have to XOR
+				isNumber = 0;
+				break;
+		}
+		
+		//If the key is a number,
+		if(isNumber == 1) {
+		
+			//No action is necessary, we can just return the key.
+			return *key;
+		}
+		
+		//Otherwise, iterate through "*key" to XOR each bit with each other
+		else {
+		
+			//Create an int "newKey" to store the XOR'd key.
+			int newKey = 0;
+			
+			for(int i = 0; i < lengthOfKey; i++) {
+			
+				newKey ^= key[i];
+			}
+			
+			//The key is now an integer. Return the key
+			return newKey;
+		}
 
 3. How can I get my "main.c" to recognize that "caesar.h" exists?
 
-gcc main.c caesar.c
+	To create any executable file with "main.c", run "gcc -o main.c [whatever other C files you want to run]"
+	
 
 4. Where is the implementation for "strings.h"? Is there a "strlen()" definition?
 
-Check the PDF
+	Check the PDF. Or, we can create our own loop to find the length of a string / character pointer (char *).
+	
+	Given a char * Str, code is as follows:
+	
+	int stringLen = 0;
+	
+	while(Str[stringLen] != 0)
+	{
+		stringLen++;
+	}
+	
+	//By here, stringLen now contains the length of Str.
+	
+	
 
 5. What is the purpose of "strings.h" class? Are we supposed to make all text that's encrypted/decrypted a "string" structure?
 
-Supposed to wrap up all the ciphers in a neat bundle, SHOULD BE USED.
+	The "strings.h" file is for us to use in our main file. It just allows us to call all of the cipher functions in one place.
+	
+	Otherwise, all of the if-statements to handle the different ciphers and encrypt/decrypt would be in main.
+	
+	We SHOULD use "strings.h" and make "strings.c", but it's a LOW PRIORITY thing.
 
 6. Can we just do "char *name = "Owen"? Or do we have to malloc with char pointers?
 
