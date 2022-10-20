@@ -9,6 +9,7 @@ MY QUESTIONS FOR GUSTY ON 10/19:
 			* decryptionKey = 26 - key
 			* decryptedCharacter = caesar_encrypt_char(encryptedCharacter, decryptionKey)
 
+__________________________________________________________________________________________________________________________________________________________________
 
 	2. If the key to a Caesar cipher is a string or contains character, what do u mean by "XOR" the bits? Does this yield an integer key?
 	
@@ -55,10 +56,13 @@ MY QUESTIONS FOR GUSTY ON 10/19:
 			return newKey;
 		}
 
+__________________________________________________________________________________________________________________________________________________________________
+
 3. How can I get my "main.c" to recognize that "caesar.h" exists?
 
 	To create any executable file with "main.c", run "gcc -o main.c [whatever other C files you want to run]"
 	
+__________________________________________________________________________________________________________________________________________________________________
 
 4. Where is the implementation for "strings.h"? Is there a "strlen()" definition?
 
@@ -75,7 +79,7 @@ MY QUESTIONS FOR GUSTY ON 10/19:
 	
 	//By here, stringLen now contains the length of Str.
 	
-	
+________________________________________________________________________________________________________________________________________________________________
 
 5. What is the purpose of "strings.h" class? Are we supposed to make all text that's encrypted/decrypted a "string" structure?
 
@@ -84,21 +88,23 @@ MY QUESTIONS FOR GUSTY ON 10/19:
 	Otherwise, all of the if-statements to handle the different ciphers and encrypt/decrypt would be in main.
 	
 	We SHOULD use "strings.h" and make "strings.c", but it's a LOW PRIORITY thing.
+	
+__________________________________________________________________________________________________________________________________________________________________
 
 6. Can we just do "char *name = "Owen"? Or do we have to malloc with char pointers?
 
-Yea that's cool, any pointer can be indexed through.
+	Yea that's cool, any pointer can be indexed through.
 __________________________________________________________________________________________________________________________________________
 
 WHERE TO START:
 
 Caesar Encryption:
 
-3 subsets:
+There are three ranges of characters that can be encrypted:
 
-1. a-z
-2. A-Z
-3. ! - ;
+1. a to z
+2. A to Z
+3. ! to ;
 
 MUST wrap-around! 
 
