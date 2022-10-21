@@ -1,12 +1,27 @@
+THIS IS THE "augustus.c" FILE WITH MY NOTES (HOPE THEY HELP!)
+
+_______________________________________________________________________________________
+
+RECOMMENDED INCLUDE FILES:
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "caesar.h"
 
+_______________________________________________________________________________________________________
+
+REFERENCED VARIABLES:
+
 //NOTE: "encChar" is a char that represents an encrypted character
 //NOTE: "keyLen" is an integer that represents the number of digits in the key
 //NOTE: "caesarStr" is a char pointer that represents the encrypted plain string after the first Caesar Cipher run
 //NOTE: "augStr" is a char pointer that represents the encrypted Caesar string after the second Caesar Cipher run
+
+
+_________________________________________________________________________________________________________________
+
+AUGUSTUS ENCRYPTION:
 
 //Augustus encryption is something like the following (not the only way to do it, but a general concept):
 	//1. Use "caesar_encrypt(char *plain, char *key)" to encrypt "plain" via the Caesar Cipher and "key"
@@ -28,9 +43,11 @@ char *augustus_encrypt(char *plain, char *key) {
 	char *placeholder = "Placeholer String";
 	return placeholder;
 }
+__________________________________________________________________________________________________________________
 
+AUGUSTUS DECRYPTION:
 
-//Augustus decryption is the opposite of Augustus encryption.
+//Of course, Augustus decryption is the opposite of Augustus encryption.
 
 	//Thus, see above, but START at "Step 3", and END at "Step 1"
 	//And, instead of using "caesar_encrypt(char *plain, char *key)",
@@ -46,3 +63,22 @@ char *augustus_decrypt(char *cipher, char *key) {
 	return placeholder;
 }
 
+_________________________________________________________________________________________________________________
+
+CREATING A TEST FILE:
+
+To test the "augustus.c", the following steps might help:
+
+	1. Add code to "main.c" to test "augustus_encrypt(char *plain, char *key)", and
+		"augustus_decrypt(char *cipher, char *key)"
+
+	1a. OR, write a new main file like "augustus_main.c" to run augustus code ONLY
+
+	2. In the command line, run "gcc -o AUGUSTUS augustus_main.c augustus.c
+
+		2a. Be sure to have "#include "augustus.h"" in your "augustus_main.c" file
+
+		2b. Your executable file is now called "AUGUSTUS"
+
+	3. Then, to run it, run "./AUGUSTUS" in the command line to run "augustus_main.c"
+	
