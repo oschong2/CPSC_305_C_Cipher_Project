@@ -27,40 +27,68 @@ int main(int argc, char **argv) {
 		printf("Augustus: 12 (coming soon!)\n");
 		printf("AES: coming soon!\n\n");
 
-		//Create a char array "cipherCmdArray" to store the user's requested cipher.
-		char cipherCmdArray[3];
+	//Store user cipher, string, and key.
 
-		//LOOK AT PROJECT FILE (PAGE 24) FOR TURNING TERMINAL INPUT INTO STRINGS
-		//Prompt the user to enter the cipher they want
+		//Create a char arrays "cipherCmdArray", "cipherTextArray", and "cipherKeyArray" to store the user's requested cipher, plain string, and key respectively.
+		char cipherCmdArray[3];
+		char cipherTextArray[100];
+		char cipherKeyArray[100];
+
+		//Create char pointers "cipherCmdString", "cipherTextString", and "cipherKeyArray" to store the user's requested cipher, plain string, and key respectively.
+		char *cipherCmdString;
+		char *cipherTextString;
+		char *cipherKeyString;
+
+		//Prompt the user to enter the cipher they want and store it in "cipherCmdString".
 		printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
 		fgets(cipherCmdArray, 3, stdin);
 		cipherCmdArray[strcspn(cipherCmdArray, "\n")] = '\0';
-		
-		//Create a char pointer "cipherCmdString" to point to "cipherCmdArray".
-		char *cipherCmdString = cipherCmdArray;
+		cipherCmdString = cipherCmdArray;
 
 		while(strcmp(cipherCmdString, "q") != 0) {
 
-			//Check if "cipherCmdString" actually stored "cipherCmdArray".
+			//Prompt the user to enter the string they want to encrypt and store it in "cipherTextString".
+			printf("\n\nEnter string: "); //THIS DOESNT WORK FOR AUGUSTUS AND AES FOR SOME REASON?!?!?!?!!
+			fgets(cipherTextArray, 100, stdin);
+			cipherTextArray[strcspn(cipherTextArray, "\n")] = '\0';
+			cipherTextString = cipherTextArray;
+
+			//Prompt the user to enter the encryption key they want and store it in "cipherKeyString".
+			printf("\n\nEnter key (Enter for default): ");
+			fgets(cipherKeyArray, 100, stdin);
+			cipherKeyArray[strcspn(cipherKeyArray, "\n")] = '\0';
+			cipherKeyString = cipherKeyArray;
+
+			//If the user wanted the Caesar cipher,
 			if(strcmp(cipherCmdString, "c") == 0) {
-				printf("\nCaesar cipher!\n");
+
+				//Encrypt the string using the Caesar cipher.
+				printf("\nCaesar encryption with text %s and key %s!\n", cipherTextString, cipherKeyString);
+
 			}
 			else if (strcmp(cipherCmdString, "au") == 0) {
-				printf("\nAugustus cipher!\n");
+
+				//Encrypt the string using the Augustus cipher.
+				printf("\nAugustus encryption with text %s and key %s! (COMING SOON)\n", cipherTextString, cipherKeyString);
 			}
 			else if(strcmp(cipherCmdString, "ae") == 0) {
-				printf("\nAES cipher!\n");
+
+				//Encrypt the string using the AES cipher.
+				printf("\nAES encryption with text %s and key %s! (COMING SOON)\n", cipherTextString, cipherKeyString);
 			}
 			else {
 				printf("\nNot a valid command!\n\n");
 			}
 
-			printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
+			//Ask for the user to input a cipher again.
+			printf("\nEnter command - q(uit), c(aesar), au(gustus), ae(s): ");
 			fgets(cipherCmdArray, 3, stdin);
 			cipherCmdArray[strcspn(cipherCmdArray, "\n")] = '\0';
-		
-			//Create a char pointer "cipherCmdString" to point to "cipherCmdArray".
 			cipherCmdString = cipherCmdArray;
+
+			//Reset "cipherTextString" and "cipherKeyString".
+			cipherTextString = "WHY";
+			cipherKeyString = "WHY";
 		}
 	}
 
