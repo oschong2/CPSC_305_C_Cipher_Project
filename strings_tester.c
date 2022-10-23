@@ -17,11 +17,7 @@ int main(int argc, char **argv) {
 	//If the user does NOT enter a main argument,
 	if (userCommand == NULL) {
 
-		//run the command processor.
-		printf("\nRUN COMMAND PROCESSOR!!\n");
-
-
-		//Print the default keys
+		//Print the default keys.
 		printf("Default Keys:\n");
 		printf("Caesar: 1\n");
 		printf("Augustus: 12 (coming soon!)\n");
@@ -67,10 +63,9 @@ int main(int argc, char **argv) {
 			if(strcmp(cipherCmdString, "c") == 0) {
 
 				//and iff the user wanted the default Caesar key,
-				if(cipherKeyString == NULL) {
+				if( ((int) strlen(cipherKeyString)) == 0) {
 
 					//set "cipherKeyString" as the default key.
-					printf("\nUsing default Caesar key!\n");
 					cipherKeyString = "1";
 				}
 
@@ -135,10 +130,9 @@ int main(int argc, char **argv) {
 			else if (strcmp(cipherCmdString, "au") == 0) {
 
 				//and if the user wanted the default Augustus key,
-				if(cipherKeyString == NULL) {
+				if(((int) strlen(cipherKeyString)) == 0) {
 
 					//set "cipherKeyString" as the default key.
-					printf("\nUsing default Augustus key!\n");
 					cipherKeyString = "12";
 				}
 
