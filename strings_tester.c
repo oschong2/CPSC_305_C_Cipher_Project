@@ -27,15 +27,41 @@ int main(int argc, char **argv) {
 		printf("Augustus: 12 (coming soon!)\n");
 		printf("AES: coming soon!\n\n");
 
-		//Create a char pointer "cipherCommand" to store the user's requested cipher.
-		char cipherCommand[2];
-		printf("\ncipherCommand is %s\n", cipherCommand);
+		//Create a char array "cipherCmdArray" to store the user's requested cipher.
+		char cipherCmdArray[3];
 
 		//LOOK AT PROJECT FILE (PAGE 24) FOR TURNING TERMINAL INPUT INTO STRINGS
 		//Prompt the user to enter the cipher they want
 		printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
-		fgets(cipherCommand, 2, stdin);
-		printf("\ncipherCommand is !!!%s!!!\n", cipherCommand);
+		fgets(cipherCmdArray, 3, stdin);
+		cipherCmdArray[strcspn(cipherCmdArray, "\n")] = '\0';
+		
+		//Create a char pointer "cipherCmdString" to point to "cipherCmdArray".
+		char *cipherCmdString = cipherCmdArray;
+
+		while(strcmp(cipherCmdString, "q") != 0) {
+
+			//Check if "cipherCmdString" actually stored "cipherCmdArray".
+			if(strcmp(cipherCmdString, "c") == 0) {
+				printf("\nCaesar cipher!\n");
+			}
+			else if (strcmp(cipherCmdString, "au") == 0) {
+				printf("\nAugustus cipher!\n");
+			}
+			else if(strcmp(cipherCmdString, "ae") == 0) {
+				printf("\nAES cipher!\n");
+			}
+			else {
+				printf("\nNot a valid command!\n\n");
+			}
+
+			printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
+			fgets(cipherCmdArray, 3, stdin);
+			cipherCmdArray[strcspn(cipherCmdArray, "\n")] = '\0';
+		
+			//Create a char pointer "cipherCmdString" to point to "cipherCmdArray".
+			cipherCmdString = cipherCmdArray;
+		}
 	}
 
 	//Else, if the user types in "default" as the main argument,
