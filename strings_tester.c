@@ -66,12 +66,15 @@ int main(int argc, char **argv) {
 			//If the user wanted the Caesar cipher,
 			if(strcmp(cipherCmdString, "c") == 0) {
 
-				//If the user wanted the default Caesar key,
+				//and iff the user wanted the default Caesar key,
 				if(cipherKeyString == NULL) {
 
 					//set "cipherKeyString" as the default key.
+					printf("\nUsing default Caesar key!\n");
 					cipherKeyString = "1";
 				}
+
+				//Otherwise, use "cipherKeyString" as it is.
 
 				//Store the encrypted "cipherTextString" in "encString", and the decrypted "encString" in "decString".
 				encString = caesar_encrypt(cipherTextString, cipherKeyString);
@@ -131,7 +134,15 @@ int main(int argc, char **argv) {
 			}
 			else if (strcmp(cipherCmdString, "au") == 0) {
 
-				//Encrypt the string using the Augustus cipher.
+				//and if the user wanted the default Augustus key,
+				if(cipherKeyString == NULL) {
+
+					//set "cipherKeyString" as the default key.
+					printf("\nUsing default Augustus key!\n");
+					cipherKeyString = "12";
+				}
+
+				//Otherwise, use "cipherKeyString" as it is.
 				printf("\nAugustus encryption with text %s and key %s! (COMING SOON)\n", cipherTextString, cipherKeyString);
 			}
 			else if(strcmp(cipherCmdString, "ae") == 0) {
@@ -148,10 +159,6 @@ int main(int argc, char **argv) {
 			fgets(cipherCmdArray, 3, stdin);
 			cipherCmdArray[strcspn(cipherCmdArray, "\n")] = '\0';
 			cipherCmdString = cipherCmdArray;
-
-			//Reset "cipherTextString" and "cipherKeyString".
-			cipherTextString = "WHY";
-			cipherKeyString = "WHY";
 		}
 	}
 
