@@ -63,8 +63,6 @@ int main(int argc, char **argv) {
 			cipherKeyArray[strcspn(cipherKeyArray, "\n")] = '\0';
 			cipherKeyString = cipherKeyArray;
 
-			//
-
 			//If the user wanted the Caesar cipher,
 			if(strcmp(cipherCmdString, "c") == 0) {
 
@@ -75,8 +73,7 @@ int main(int argc, char **argv) {
 					cipherKeyString = "1";
 				}
 
-				//Encrypt the string using the Caesar cipher.
-				printf("\nCaesar encryption with text %s and key %s!\n", cipherTextString, cipherKeyString);
+				//Store the encrypted "cipherTextString" in "encString", and the decrypted "encString" in "decString".
 				encString = caesar_encrypt(cipherTextString, cipherKeyString);
 				decString = caesar_decrypt(encString, cipherKeyString);
 
