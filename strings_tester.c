@@ -78,12 +78,18 @@ int main(int argc, char **argv) {
 
 			printf("\nTOP OF WHILE LOOP\n");
 			//Prompt the user to enter the string they want to encrypt and store it in "cipherTextString".
-			printf("\n\nEnter string: "); //THIS DOESNT WORK FOR AUGUSTUS AND AES FOR SOME REASON?!?!?!?!!
-			fgets(cipherTextArray, 100, stdin);
-			cipherTextArray[strcspn(cipherTextArray, "\n")] = '\0';
-			cipherTextString = cipherTextArray;
+			if(((int) strlen(cipherTextString)) == 0) {
+				printf("\n\nEnter string: "); //THIS DOESNT WORK FOR AUGUSTUS AND AES FOR SOME REASON?!?!?!?!!
+				fgets(cipherTextArray, 100, stdin);
+				cipherTextArray[strcspn(cipherTextArray, "\n")] = '\0';
+				cipherTextString = cipherTextArray;
+			}
+					printf("\ncipherKeyString is !!%s!! with length %d\n", cipherKeyString, (int) strlen(cipherKeyString));
 
 			//Prompt the user to enter the encryption key they want and store it in "cipherKeyString".
+			if(((int) strlen(cipherTextString)) == 0) {
+
+			}
 			printf("\n\nEnter key (Enter for default): ");
 			fgets(cipherKeyArray, 100, stdin);
 			cipherKeyArray[strcspn(cipherKeyArray, "\n")] = '\0';
