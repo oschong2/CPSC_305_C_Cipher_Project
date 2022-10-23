@@ -116,7 +116,7 @@ char Augustus_encrypt_char(char plain, int key) {
 }
 
 			
-
+//delete this after char Augustus_encrypt_char(char plain, int key) is done
 /*char *augustus_encrypt(char *plain, char *key) {
 
 	//Placeholder code so the functions don't break.
@@ -133,11 +133,69 @@ char Augustus_encrypt_char(char plain, int key) {
 	
 	//Use "caesar_decrypt(char *cipher, char *key)",
 		//and "caesar_decrypt_char(char cipher, int key)" respectively.
-	
+//SEE GITHUB FOR DECRYPTION METHODS!!!
+
+
+char augustus_decrypt(char cipher, int key) {
+    //first un-do augustus then ceaser
+    
+    
+    
+    
+    //Create a char "decChar" to hold the decrypted version of "cipher".
+    char decChar;
+
+    //Create a char "lowerBound" to hold the bottom of one of these ranges.
+    char lowerBound;
+
+    //Create a char "upperBound" to hold the top of one of these ranges.
+    char upperBound;
+
+    //If the character ranges from 'a' to 'z',
+    if((cipher >= 'a') && (cipher <= 'z')) {
+        lowerBound = 'a';
+        upperBound = 'z';
+    }else if ((cipher >= 'A') && (cipher <= 'Z')) {
+    //Otherwise, if the character ranges from 'A' to 'Z',
+        lowerBound = 'A';
+        upperBound = 'Z';
+    }
+    
+
+    //Otherwise, if the character ranges from '!' to ';',
+    else if ((cipher >= '!') && (cipher <= ';')) {
+        lowerBound = '!';
+        upperBound = ';';
+    }else {
+    //Otherwise, the character cannot be decrypted. Return "cipher". This is the fail safe boii
+        return cipher;
+    }
+
+    //Now, if decrypting the character goes below "lowerBound",
+    if((cipher - key) < lowerBound) {
+
+        //Wrap the character around to the end of the range.
+        decChar = cipher - key + 26;
+//        printf("\nDecrypting %c goes below %c, so it's wrapped around to %c\n", cipher, lowerBound, decChar);
+    }else {
+    //Otherwise, decrypt "cipher" normally.
+        decChar = cipher - key;
+    }
+
+//    printf("The decrypted char is %c\n", decChar);
+    return decChar;
+
+}
+
+
+//delete this after char augustus_decrypt is done
+/*
 char *augustus_decrypt(char *cipher, char *key) {
 
 	//Placeholder code so the functions don't break.
 	char *placeholder = "Placeholder String";
 	return placeholder;
 }
+ */
+
 
