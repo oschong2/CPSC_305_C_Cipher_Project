@@ -39,6 +39,10 @@ int main(int argc, char **argv) {
 		char *cipherTextString;
 		char *cipherKeyString;
 
+		//Create char pointers "encString" and "decString" to hold the values of encrypted and decrypted strings.
+		char *encString;
+		char *decString;
+
 		//Prompt the user to enter the cipher they want and store it in "cipherCmdString".
 		printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
 		fgets(cipherCmdArray, 3, stdin);
@@ -59,6 +63,8 @@ int main(int argc, char **argv) {
 			cipherKeyArray[strcspn(cipherKeyArray, "\n")] = '\0';
 			cipherKeyString = cipherKeyArray;
 
+			//
+
 			//If the user wanted the Caesar cipher,
 			if(strcmp(cipherCmdString, "c") == 0) {
 
@@ -71,16 +77,14 @@ int main(int argc, char **argv) {
 
 				//Encrypt the string using the Caesar cipher.
 				printf("\nCaesar encryption with text %s and key %s!\n", cipherTextString, cipherKeyString);
-				char *encString = caesar_encrypt(cipherTextString, cipherKeyString);
+				encString = caesar_encrypt(cipherTextString, cipherKeyString);
+				decString = caesar_decrypt(encString, cipherKeyString);
 
 				//Output the first 16 characters of the plain string.
-
 				int textLen = strlen(cipherTextString);
-
 				printf("\nPlain text string:\n");
 				printf("len: %d\n", textLen);
 				for(int i = 0; i < 16; i++) {
-
 					if(i < textLen) {
 						printf("%x ", cipherTextString[i]);
 					}
@@ -90,8 +94,43 @@ int main(int argc, char **argv) {
 				}
 				printf(" |  %s\n", cipherTextString);
 
-				//Output the first 16 characters of the cipher string.
+				//Output the first 16 characters of the encrypted string.
+				printf("\nCipher text string:\n");
+				printf("len: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", encString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", encString);
 
+				//Output the first 16 characters of the decrypted string.
+				printf("\nDecrypted input:\n");
+				printf("%s\n", decString);
+				printf("len: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+				printf("\nlen: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
 			}
 			else if (strcmp(cipherCmdString, "au") == 0) {
 
