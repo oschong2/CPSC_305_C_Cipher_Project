@@ -51,14 +51,14 @@ int main(int argc, char **argv) {
 	//Store user cipher, string, and key.
 
 		//Create a char arrays "cipherCmdArray", "cipherTextArray", and "cipherKeyArray" to store the user's requested cipher, plain string, and key respectively.
-		char cipherCmdArray[3];
+		char cipherCmdArray[4];
 		char cipherTextArray[100];
 		char cipherKeyArray[100];
 
 		//Create char pointers "cipherCmdString", "cipherTextString", and "cipherKeyArray" to store the user's requested cipher, plain string, and key respectively.
-		char *cipherCmdString;
-		char *cipherTextString;
-		char *cipherKeyString;
+		char *cipherCmdString = malloc(4);
+		char *cipherTextString = malloc(100);
+		char *cipherKeyString = malloc(100);
 
 		//Create char pointers "encString" and "decString" to hold the values of encrypted and decrypted strings.
 		char *encString;
@@ -66,12 +66,17 @@ int main(int argc, char **argv) {
 
 		//Prompt the user to enter the cipher they want and store it in "cipherCmdString".
 		printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
-		fgets(cipherCmdArray, 3, stdin);
+		fgets(cipherCmdArray, 4, stdin);
 		cipherCmdArray[strcspn(cipherCmdArray, "\n")] = '\0';
 		cipherCmdString = cipherCmdArray;
 
 		while(strcmp(cipherCmdString, "q") != 0) {
 
+			printf("\ncipherCmdString is !!%s!! with length %d\n", cipherCmdString, (int) strlen(cipherCmdString));
+			printf("\ncipherTextString is !!%s!! with length %d\n", cipherTextString, (int) strlen(cipherTextString));
+			printf("\ncipherKeyString is !!%s!! with length %d\n", cipherKeyString, (int) strlen(cipherKeyString));
+
+			printf("\nTOP OF WHILE LOOP\n");
 			//Prompt the user to enter the string they want to encrypt and store it in "cipherTextString".
 			printf("\n\nEnter string: "); //THIS DOESNT WORK FOR AUGUSTUS AND AES FOR SOME REASON?!?!?!?!!
 			fgets(cipherTextArray, 100, stdin);
@@ -177,8 +182,20 @@ int main(int argc, char **argv) {
 				printf("\nNot a valid command!\n\n");
 			}
 
+			//Clear all variables.
+			cipherCmdString[0] = '\0';
+			cipherTextString[0] = '\0';
+			cipherKeyString[0] = '\0';
+
+			printf("\nLASTLY:\n");
+			printf("\ncipherCmdString is !!%s!! with length %d\n", cipherCmdString, (int) strlen(cipherCmdString));
+			printf("\ncipherTextString is !!%s!! with length %d\n", cipherTextString, (int) strlen(cipherTextString));
+			printf("\ncipherKeyString is !!%s!! with length %d\n", cipherKeyString, (int) strlen(cipherKeyString));
+
+
+
 			//Ask for the user to input a cipher again.
-			printf("\nEnter command - q(uit), c(aesar), au(gustus), ae(s): ");
+			printf("\nEnter command FOR THE SECOND TIME - q(uit), c(aesar), au(gustus), ae(s): ");
 			fgets(cipherCmdArray, 3, stdin);
 			cipherCmdArray[strcspn(cipherCmdArray, "\n")] = '\0';
 			cipherCmdString = cipherCmdArray;
@@ -189,7 +206,6 @@ int main(int argc, char **argv) {
 	else if(strcmp(userCommand, "default") == 0) {
 
 		//run the "default_tests()" method.
-		printf("\n\nRUN DEFAULT TESTS!!\n\n");
 		default_tests();
 	}
 
