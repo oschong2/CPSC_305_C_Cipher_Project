@@ -62,8 +62,35 @@ int main(int argc, char **argv) {
 			//If the user wanted the Caesar cipher,
 			if(strcmp(cipherCmdString, "c") == 0) {
 
+				//If the user wanted the default Caesar key,
+				if(cipherKeyString == NULL) {
+
+					//set "cipherKeyString" as the default key.
+					cipherKeyString = "1";
+				}
+
 				//Encrypt the string using the Caesar cipher.
 				printf("\nCaesar encryption with text %s and key %s!\n", cipherTextString, cipherKeyString);
+				char *encString = caesar_encrypt(cipherTextString, cipherKeyString);
+
+				//Output the first 16 characters of the plain string.
+
+				int textLen = strlen(cipherTextString);
+
+				printf("\nPlain text string:\n");
+				printf("len: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+				//Output the first 16 characters of the cipher string.
 
 			}
 			else if (strcmp(cipherCmdString, "au") == 0) {
