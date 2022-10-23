@@ -8,6 +8,31 @@
 
 //This is the main file for all of the code.
 
+/*
+TO DO LIST:
+
+	OVERALL:
+		1. Figure out how AES encryption/decryption works!
+		2. Work on "strings.h" for the default tests!
+
+	CL Processor:
+		1. Fix input code for adding Augustus and AES input strings
+		2. Move printing code outside of the cipher if-statements.
+		3. Add default key for AES cipher
+		4. Add AES cipher encryption/decryption code
+
+	DEFAULT TESTS:
+		1. Uncomment out Augustus AFTER Augustus is done!
+		2. Uncomment out AES AFTER AES is done!
+
+	FILE INPUT:
+		1. Figure out why "ciphers.txt" is 151 lines but "numLines" is 154
+		2. Parse through important information (IGNORE lines with "#")
+
+
+
+*/
+
 int main(int argc, char **argv) {
 
 	//Create char * "userCommand" to hold the main argument passed in by the user.
@@ -127,6 +152,8 @@ int main(int argc, char **argv) {
 				}
 				printf(" |  %s\n", cipherTextString);
 			}
+
+			//Else, if the user wanted the Augustus cipher,
 			else if (strcmp(cipherCmdString, "au") == 0) {
 
 				//and if the user wanted the default Augustus key,
@@ -139,6 +166,8 @@ int main(int argc, char **argv) {
 				//Otherwise, use "cipherKeyString" as it is.
 				printf("\nAugustus encryption with text %s and key %s! (COMING SOON)\n", cipherTextString, cipherKeyString);
 			}
+
+			//Else, if the user wanted the AES cipher,
 			else if(strcmp(cipherCmdString, "ae") == 0) {
 
 				//Encrypt the string using the AES cipher.
