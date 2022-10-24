@@ -182,8 +182,65 @@ int main(int argc, char **argv) {
 					cipherKeyString = "12";
 				}
 
+				//Store the encrypted "cipherTextString" in "encString", and the decrypted "encString" in "decString".
+				encString = augustus_encrypt(cipherTextString, cipherKeyString);
+				decString = augustus_decrypt(encString, cipherKeyString);
+
+				//Output the first 16 characters of the plain string.
+				textLen = strlen(cipherTextString);
+				printf("\nPlain text string:\n");
+				printf("len: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+				//Output the first 16 characters of the encrypted string.
+				printf("\nCipher text string:\n");
+				printf("len: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", encString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", encString);
+
+				//Output the first 16 characters of the decrypted string.
+				printf("\nDecrypted input:\n");
+				printf("%s\n", decString);
+				printf("len: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+				printf("\nlen: %d\n", textLen);
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+
 				//Otherwise, use "cipherKeyString" as it is.
-				printf("\nAugustus encryption of %s with %s!!\n", cipherTextString, cipherKeyString);
+				//printf("\nAugustus encryption of %s with %s!!\n", cipherTextString, cipherKeyString);
 			}
 
 			//Else, if the user wanted the AES cipher,
