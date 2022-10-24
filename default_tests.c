@@ -23,14 +23,15 @@ void default_tests() {
 
     printf("ceasarEncrypt(gusty, 2): %s\n", caesar_encrypt("gusty", "2"));
 
-/*
+
     printf("augustusEncrypt(gusty, 1): %s\n", augustus_encrypt("gusty", "1"));
-    printf("augustusDecript(augustusEncrypt(gusty, 1), 1): %s\n", augustus_decrypt(augustus_encrypt("gusty", "1"), "1"));
+    printf("augustusDecrypt(augustusEncrypt(gusty, 1), 1): %s\n", augustus_decrypt(augustus_encrypt("gusty", "1"), "1"));
 
     printf("ceasarEncrypt(gusty, 11): %s\n", caesar_encrypt("gusty", "11"));
     printf("augustusEncrypt(gusty, 11): %s\n", augustus_encrypt("gusty", "11"));
+/*
     printf("augustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", augustus_decrypt(augustus_encrypt("gusty", "11"), "11"));
-    printf("XXaugustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", decrypt_string(AUGUSTUS, encrypt_string(AUGUSTUS, "gusty", "11"), "11"));
+    printf("augustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", decrypt_string(AUGUSTUS, encrypt_string(AUGUSTUS, "gusty", "11"), "11"));
 
     string *str = encrypt_string(CAESAR, "gusty !15:","2");
     printf("%s\n", str->plain);

@@ -24,9 +24,10 @@ int main() {
 	char *decryptedStr = augustus_decrypt(encryptedStr, sampleKey);
 	printf("\n\n\"%s\" was Augustus decrypted back to \"%s\"\n\n", encryptedStr, decryptedStr);
 
-	printf("running default tests!!\n\n");
+	printf("DEFAULT TESTS\n\n");
 
 	default_tests();
+	printf("\n\n");
 
 	return 0;
 }

@@ -21,7 +21,7 @@ int main() {
 	char *sampleStr = "Owen";
 
 	//Create a char pointer "*sampleKey" as an encryption key.
-	char *sampleKey = "10";
+	char *sampleKey = "2626";
 
 	//Call "caesar_encrypt(char *plain, char *key)" to encrypt "sampleStr" using "sampleKey".
 		//Store in char pointer "*encryptedStr"
@@ -34,7 +34,7 @@ int main() {
 
 	printf("running default tests!!\n\n");
 
-	default_tests();
+	//default_tests();
 
 	return 0;
 }
