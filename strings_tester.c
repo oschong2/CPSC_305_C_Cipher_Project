@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "strings.h"
 #include "caesar.h"
 #include "augustus.h"
+#include "aes_cbc.h"
 #include "default_tests.h"
 
 //This is the main file for all of the code.
@@ -36,12 +38,12 @@ int main(int argc, char **argv) {
 
 	//Create char * "userCommand" to hold the main argument passed in by the user.
 	char *userCommand = argv[1];
-	printf("\nuserCommand is %s\n", userCommand);
 
 	//If the user does NOT enter a main argument,
 	if (userCommand == NULL) {
 
 		int loopCtr = 0;
+		int textLen = 0;
 
 		//Print the default keys.
 		printf("Default Keys:\n");
@@ -73,7 +75,7 @@ int main(int argc, char **argv) {
 
 		while(strcmp(cipherCmdString, "q") != 0) {
 
-			loopCtr++;
+			//loopCtr++;
 			//If the user wanted the Caesar cipher,
 			if(strcmp(cipherCmdString, "c") == 0) {
 
@@ -103,7 +105,7 @@ int main(int argc, char **argv) {
 				decString = caesar_decrypt(encString, cipherKeyString);
 
 				//Output the first 16 characters of the plain string.
-				int textLen = strlen(cipherTextString);
+				textLen = strlen(cipherTextString);
 				printf("\nPlain text string:\n");
 				printf("len: %d\n", textLen);
 				for(int i = 0; i < 16; i++) {
@@ -188,10 +190,10 @@ int main(int argc, char **argv) {
 			else if(strcmp(cipherCmdString, "ae") == 0) {
 
 				//Prompt the user to enter the string they want to encrypt and store it in "cipherTextString".
-				printf("\n\nEnter string: "); //THIS DOESNT WORK FOR AUGUSTUS AND AES FOR SOME REASON?!?!?!?!!
 				if(loopCtr > 0) {
 					fgets(cipherTextArray, 100, stdin);
 				}
+				printf("\n\nEnter string: "); //THIS DOESNT WORK FOR AUGUSTUS AND AES FOR SOME REASON?!?!?!?!!
 				fgets(cipherTextArray, 100, stdin);
 				cipherTextArray[strcspn(cipherTextArray, "\n")] = '\0';
 				cipherTextString = cipherTextArray;
@@ -201,6 +203,85 @@ int main(int argc, char **argv) {
 				fgets(cipherKeyArray, 100, stdin);
 				cipherKeyArray[strcspn(cipherKeyArray, "\n")] = '\0';
 				cipherKeyString = cipherKeyArray;
+
+				//If the user wanted the default Augustus key,
+				if(((int) strlen(cipherKeyString)) == 0) {
+
+					//set "cipherKeyString" as the default key.
+					uint8_t key[] = { 0x2b, 0x72, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+				}
+
+
+				uint8_t key[] = { 0x2b, 0x72, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+
+				textLen = strlen(cipherTextString);
+				uint8_t in[textLen + 1];
+				uint8_t iv[] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+
+				memcpy(in, cipherTextString, textLen);
+
+				char *inString = in;
+
+				struct AES_ctx ctx;
+				AES_init_ctx_iv(&ctx, key, iv);
+				AES_CBC_encrypt_buffer(&ctx, in, 16);
+
+				//Output the first 16 characters of the plain string.
+				int textLen = strlen(cipherTextString);
+				printf("\nPlain text string:\n");
+				printf("len: 16\n");
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+				//Output the first 16 characters of the encrypted string.
+				printf("\nCipher text string:\n");
+				printf("len: 16\n");
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen && isprint(in[i])) {
+						printf("%.2x ", in[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", inString);
+
+
+
+				//Output the first 16 characters of the decrypted string.
+				printf("\nDecrypted input:\n");
+				printf("%s\n", cipherTextString);
+				printf("len: %d\n", (int) strlen(cipherTextString));
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("_0 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+				printf("\nlen: 16\n");
+				for(int i = 0; i < 16; i++) {
+					if(i < textLen) {
+						printf("%x ", cipherTextString[i]);
+					}
+					else {
+						printf("00 ");
+					}
+				}
+				printf(" |  %s\n", cipherTextString);
+
+
+
 
 				//Encrypt the string using the AES cipher.
 			}
@@ -217,6 +298,8 @@ int main(int argc, char **argv) {
 			memset(cipherCmdArray, 0, 4);
 			memset(cipherTextArray, 0, 100);
 			memset(cipherKeyArray, 0, 100);
+
+			loopCtr++;
 /*
 			printf("\nLASTLY:\n");
 			printf("\ncipherCmdString is !!%s!! with length %d\n", cipherCmdString, (int) strlen(cipherCmdString));
@@ -248,13 +331,18 @@ int main(int argc, char **argv) {
 	else {
 
 		//assume the user entered a filename and run the input file processor code.
-		printf("\n\nRun input file!!\n\n");
 
 		//Create a FILE pointer "inFile" to hold the input file.
 		FILE *inFile = fopen(userCommand, "r");
 
 		//Create a char array "fileLine" to hold each line of text in the input file.
 		char fileLine[100];
+
+		char *fileLineStr;
+		char *encLine; //Holds the encryption/decryption status.
+		char *cipherLine; //Holds the cipher to use.
+		char *keyLine; //Holds the key to use.
+		char *textLine; //Holds the text to encrypt/decrypt with "keyLine".
 
 		//If the file doesn't exist,
 		if(inFile == NULL) {
@@ -265,14 +353,124 @@ int main(int argc, char **argv) {
 
 		//Otherwise,
 		else {
-			int numLines = 0;
+
+			//Create a char array "fileLine" to hold each line of text in the input file.
+			char fileLine[100];
+
+			char *fileLineStr;
+			char *encLine; //Holds the encryption/decryption status.
+			char *cipherLine; //Holds the cipher to use.
+			char *keyLine; //Holds the key to use.
+			char *textLine; //Holds the text to encrypt/decrypt with "keyLine".
+
+			int tripletCtr = 0; //Holds the number of the triplet we're on.
+			int tripletLineCtr = 0; //Determines whether the line within the triplet is encryption/decryption and cipher, key, or text.
+			int textLineLength = 0; //Stores the length of the string to encrypt/decrypt.
 
 			//Iterate through each line of the file.
 			while(fgets(fileLine, 100, inFile) != NULL) {
-				numLines++;
-				printf("%s", fileLine);
+				fileLine[strcspn(fileLine, "\n")] = '\0';
+
+				//If the line is comment,
+				if(fileLine[0] == '#') {
+
+					//and the line is a triplet comment,
+					if((fileLine[1] == 'T' || fileLine[2] == 'T')) {
+
+						tripletCtr++;
+
+						//The next line contains the cipher and encryption status.
+						printf("\n%s", fileLine);
+						fgets(fileLine, 100, inFile);
+						printf("\nfileLine is %s\n", fileLine);
+
+						//Split "fileLine" into "encLine" and "cipherLine".
+						char *encAndCipher = strtok(fileLine, " ");
+
+						//Loop through "encAndCipher" to extract the enc and cipher.
+						for(int i = 0; i < 2; i++) {
+
+							//If it's the first iteration of the loop,
+							if(i == 0) {
+
+								//Save the enc into "encLine".
+								encLine = encAndCipher;
+								encLine[strcspn(encLine, "\n")] = '\0';
+								encAndCipher = strtok(NULL, " ");
+							}
+
+							//Else, save the cipher into "cipherLine".
+							else
+							{
+								cipherLine = encAndCipher;
+								cipherLine[strcspn(cipherLine, "\n")] = '\0';
+							}
+						}
+
+						printf("encLine is !!%s!!, which compared to \"encrypt\" is %d\n", encLine, strcmp(encLine, "encrypt"));
+						printf("cipherLine is !!%s!!, which compared to \"caesar\" is %d\n", cipherLine, strcmp(cipherLine, "caesar"));
+						tripletLineCtr++;
+					}	
+					
+					//Else, the line is just a random comment to ignore.
+					else {
+
+					}
+				}
+
+				//Else, if tripleLineCtr == 1, then the next line should be the key.
+				else if(tripletLineCtr == 1) {
+					keyLine = fileLine;
+					keyLine[strcspn(keyLine, "\n")] = '\0';
+					printf("keyLine is %s\n", keyLine);
+					tripletLineCtr++;
+				}
+
+				//Else, if tripletLineCtr == 2, then the next line should be the text.
+				else if(tripletLineCtr == 2) {
+					textLine = fileLine;
+					textLine[strcspn(textLine, "\n")] = '\0';
+					textLineLength = strlen(textLine);
+					printf("textLine is %s with length %d\n", textLine, textLineLength);
+
+					//Reset tripletLineCtr to look for encs and ciphers again.
+					tripletLineCtr = 0;
+				}
+
+				//Otherwise, just do nothing.
+				else {
+
+				}
+
+				//Now, encrypt/decrypt the string using the key based on the Caesar/Augustus/AES cipher.
+
+				//If the file requires Caesar
+				if(strcmp(cipherLine, "caesar") == 0) {
+
+					//and encryption,
+					if(strcmp(encLine, "encrypt") == 0) {
+
+						//Perform caesar encryption.
+						printf("\nCaesar encryption of %s with key %s!!\n", textLine, keyLine);
+						char *encCipher = caesar_encrypt(textLine, keyLine);
+
+						//Print the caesar encryption.
+						printf("Triplet: %d, Cipher: Caesar, Encrypt len: %d\n", tripletCtr, textLineLength);
+						for(int i = 0; i < 16; i++) {
+							if(i < textLineLength && isprint(encCipher[i])) {
+								printf("%.2x ", encCipher[i]);
+							}
+							else {
+								printf("_0 ");
+							}
+						}
+						printf(" |  %s\n", encCipher);
+					}
+
+					//and decryption.
+				}
+				//printf("%s", fileLine);
 			}
-			printf("\nThe number of file lines is %d\n", numLines);
 			fclose(inFile);
 
 		}
