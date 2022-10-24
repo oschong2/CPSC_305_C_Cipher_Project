@@ -75,8 +75,9 @@ char *augustus_encrypt(char *plain, char *key) {
 
 
 char *augustus_decrypt(char *cipher, char *key) {
-    //Create a char pointer "encStr" to hold the encrypted string
     int trueKey = convert_key(key) % 26;
+
+    printf("\n Augustus string is %s\n", cipher);
 
     //Find & store the length of the key
     int keyLen = 0;
@@ -89,30 +90,51 @@ char *augustus_decrypt(char *cipher, char *key) {
     while(cipher[cipherLen] != 0) {
         cipherLen++;
     }
-    
+
+    //Create a char pointer "encStr" to hold the encrypted string
     char *decStrA = malloc(cipherLen + 1);
 
-    char keyChar;
+    char keyChar[1];
     char *keyPointer;
     int keyDigit;
     
     int k  = 0;
-    for(int i = 0; i < cipherLen; i++) {
+    int i = 0;
+    printf("\nFirst, the key is %d\n\n", trueKey);
+
+    while(i < cipherLen) {
+
+        printf("\ni starts the loop at %d\n", i);
         
         while(k < keyLen){
-            keyDigit = key[k];
-            keyPointer = &keyChar;
+            keyChar[0] = key[k];
+            printf("\nkeyChar is %c\n", keyChar[0]);
+
+            keyPointer = keyChar;
+            printf("keyPointer is %c\n", keyPointer[0]);
+            printf("The length of keyPointer is %d\n", (int) strlen(keyPointer));
+
             keyDigit = convert_key(keyPointer);
+            printf("keyDigit is %d\n", keyDigit);
+
             decStrA[i] = caesar_decrypt_char(cipher[i], keyDigit);
+            printf("%c was Caesar decrypted by %d to get the Augustus decrypted %c\n\n", cipher[i], keyDigit, decStrA[i]);
             i++;
+            printf("i is %d\n", i);
+
             k++;
+            printf("k is %d\n\n", k);
         }
         k = 0;
+        printf("i ends the loop at %d\n", i);
+
     }
 
     char *decStrB = malloc(cipherLen + 1);
     decStrB = caesar_decrypt(decStrA, key);
+    printf("\n%s was Caesar decrypted to %s\n", decStrA, decStrB);
     
     return decStrB;
+
 
 }
