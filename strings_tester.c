@@ -416,6 +416,7 @@ int main(int argc, char **argv) {
 
 			//Iterate through each line of the file.
 			while(fgets(fileLine, 100, inFile) != NULL) {
+				//printf("tripletLineCtr is %d\n", tripletLineCtr);
 				fileLine[strcspn(fileLine, "\n")] = '\0';
 
 				//If the line is comment,
@@ -429,7 +430,7 @@ int main(int argc, char **argv) {
 						//The next line contains the cipher and encryption status.
 						printf("\n%s", fileLine);
 						fgets(fileLine, 100, inFile);
-						printf("\nfileLine is %s\n", fileLine);
+						//printf("\nfileLine is %s\n", fileLine);
 
 						//Split "fileLine" into "encLine" and "cipherLine".
 						char *encAndCipher = strtok(fileLine, " ");
@@ -459,10 +460,10 @@ int main(int argc, char **argv) {
 							}
 						}
 
-						printf("encLine is !!%s!!, which compared to \"encrypt\" is %d\n", encLine, strcmp(encLine, "encrypt"));
+					//	printf("encLine is !!%s!!, which compared to \"encrypt\" is %d\n", encLine, strcmp(encLine, "encrypt"));
 						//printf("YO WTFFFFF\n");
-						printf("\ncipherLine is %s\n", cipherLine);
-						printf("cipherLine[0] is %c\n", cipherLine[0]);
+						//printf("\ncipherLine is %s\n", cipherLine);
+					//	printf("cipherLine[0] is %c\n", cipherLine[0]);
 						tripletLineCtr++;
 					}	
 				}
@@ -471,7 +472,7 @@ int main(int argc, char **argv) {
 				else if(tripletLineCtr == 1) {
 					keyLine = fileLine;
 					keyLine[strcspn(keyLine, "\n")] = '\0';
-					printf("keyLine is %s\n", keyLine);
+				//	printf("keyLine is %s\n", keyLine);
 					tripletLineCtr++;
 				}
 
@@ -480,7 +481,7 @@ int main(int argc, char **argv) {
 					textLine = fileLine;
 					textLine[strcspn(textLine, "\n")] = '\0';
 					textLineLength = strlen(textLine);
-					printf("textLine is %s\n", textLine);
+					//printf("textLine is %s\n", textLine);
 
 					//Reset tripletLineCtr to look for encs and ciphers again.
 					tripletLineCtr++;;
@@ -489,21 +490,22 @@ int main(int argc, char **argv) {
 				//Now, encrypt/decrypt the string using the key based on the Caesar/Augustus/AES cipher.
 				//printf("\nFIRED UP, READY TO WORK!\n");
 				//If the file requires Caesar
-				printf("tripleLineCtr is %d\n", tripletLineCtr);
-				if(tripletLineCtr==3)
+				//printf("tripleLineCtr is %d\n", tripletLineCtr);
+				if(tripletLineCtr == 3)
 				{
-					printf("IN WORK LOOP!\n");
+					//printf("IN WORK LOOP!\n");
+				//	printf("%d\n", cipherLine[0] == 'c');
 					tripletLineCtr = 0;
 
-					if(cipherLine[0] == 'c') {
-						printf("\nWE WANT CAESAR CIPHER!!\n");
+					if((cipherLine[0] == 'c') == 0) {
+					//	printf("\nWE WANT CAESAR CIPHER!!\n");
 
 						//and encryption,
-						if(strcmp(encLine, "encrypt") == 0) {
+						if((encLine[0] == 'e') == 0) {
 
-							printf("\nWE WANT CAESAR ENCRYPTION!!\n");
+						//	printf("\nWE WANT CAESAR ENCRYPTION!!\n");
 							//Perform caesar encryption.
-							printf("\nCaesar encryption of %s with key %s!!\n", textLine, keyLine);
+							//printf("\nCaesar encryption of %s with key %s\n", textLine, keyLine);
 							char *encCipher = caesar_encrypt(textLine, keyLine);
 
 							//Print the caesar encryption.
@@ -517,6 +519,9 @@ int main(int argc, char **argv) {
 								}
 							}
 							printf(" |  %s\n", encCipher);
+						}
+						else {
+							
 						}
 
 					//and decryption.
