@@ -357,16 +357,7 @@ int main(int argc, char **argv) {
 			memset(cipherKeyArray, 0, 100);
 
 			loopCtr++;
-/*
-			printf("\nLASTLY:\n");
-			printf("\ncipherCmdString is !!%s!! with length %d\n", cipherCmdString, (int) strlen(cipherCmdString));
-			printf("\ncipherTextString is !!%s!! with length %d\n", cipherTextString, (int) strlen(cipherTextString));
-			printf("\ncipherKeyString is !!%s!! with length %d\n", cipherKeyString, (int) strlen(cipherKeyString));
 
-			printf("\ncipherCmdArray is !!%s!! with length %d\n", cipherCmdArray, (int) strlen(cipherCmdArray));
-			printf("\ncipherTextArray is !!%s!! with length %d\n", cipherTextArray, (int) strlen(cipherTextArray));
-			printf("\ncipherKeyArray is !!%s!! with length %d\n", cipherKeyArray, (int) strlen(cipherKeyArray));
-*/
 			//Ask for the user to input a cipher again.
 			printf("\nEnter command FOR THE SECOND TIME - q(uit), c(aesar), au(gustus), ae(s): ");
 			fgets(cipherCmdArray, 3, stdin);
@@ -384,7 +375,6 @@ int main(int argc, char **argv) {
 
 
 	//Else,
-	//FIND OUT WHY "ciphers.txt" HAS 151 LINES, BUT "numLines"==154????
 	else {
 
 		//assume the user entered a filename and run the input file processor code.
@@ -447,6 +437,8 @@ int main(int argc, char **argv) {
 						//Loop through "encAndCipher" to extract the enc and cipher.
 						for(int i = 0; i < 2; i++) {
 
+							//printf("encAndCipher is !!%s!!\n", encAndCipher);
+
 							//If it's the first iteration of the loop,
 							if(i == 0) {
 
@@ -459,13 +451,17 @@ int main(int argc, char **argv) {
 							//Else, save the cipher into "cipherLine".
 							else
 							{
+							
+								encAndCipher[strcspn(encAndCipher, "\n")] = '\0';
 								cipherLine = encAndCipher;
-								cipherLine[strcspn(cipherLine, "\n")] = '\0';
+								cipherLine[strcspn(cipherLine, "\n")] = '\0'; 
+								//printf("cipherLine is !!%s!!\n", cipherLine);
 							}
 						}
 
 						printf("encLine is !!%s!!, which compared to \"encrypt\" is %d\n", encLine, strcmp(encLine, "encrypt"));
-						printf("cipherLine is !!%s!!, which compared to \"caesar\" is %d\n", cipherLine, strcmp(cipherLine, "caesar"));
+						printf("YO WTFFFFF\n");
+						printf("cipherLine is AAAAAAAAAAAAAAAAa!!egegheig%s\n", cipherLine);
 						tripletLineCtr++;
 					}	
 					
@@ -488,7 +484,7 @@ int main(int argc, char **argv) {
 					textLine = fileLine;
 					textLine[strcspn(textLine, "\n")] = '\0';
 					textLineLength = strlen(textLine);
-					printf("textLine is %s with length %d\n", textLine, textLineLength);
+					printf("textLine is %s\n", textLine);
 
 					//Reset tripletLineCtr to look for encs and ciphers again.
 					tripletLineCtr = 0;
