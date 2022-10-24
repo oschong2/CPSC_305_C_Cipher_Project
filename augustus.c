@@ -9,18 +9,7 @@
 //NOTE: "augStr" is a char pointer that represents the encrypted Caesar string after the second Caesar Cipher run
 
 
-
-//Augustus encryption is something like the following (not the only way to do it, but a general concept):
-	//1. Use "caesar_encrypt(char *plain, char *key)" to encrypt "plain" via the Caesar Cipher and "key"
-		//(✿ ◕ᗜ◕)━♫.*･｡ﾟ 1a. Save this encryption in a char pointer like "caesarStr"
-//(✿ ◕ᗜ◕)━♫.*･｡ﾟ2.1 Find the length of the key (see lines 203-206 in "caesar.c")
-
-//2.2 Save each digit of the key in a char like "keyDigit" using "key[i]", where 'i' is a number
-//2.3.1 For-loop through the length of the key, running "caesar_encrypt_char(encChar, keyDigit)"
-    //2.3.2 If you reach "keyLen", make "keyDigit" the first digit of the key
-    //2.3.3 Something like "keyDigit = key[0];"
-
-char *Augustus_encrypt(char *plain, char *key) {
+char *augustus_encrypt(char *plain, char *key) {
     int trueKey = convert_key(key) % 26;
 
     //Find & store the length of the key
@@ -63,72 +52,45 @@ char *Augustus_encrypt(char *plain, char *key) {
 }
 
 
+char augustus_decrypt(char cipher, char *key) {
+    //Create a char pointer "encStr" to hold the encrypted string
+    int trueKey = convert_key(key) % 26;
 
-//Augustus decryption is the opposite of Augustus encryption.
+    //Find & store the length of the key
+    int keyLen = 0;
+    while(key[keyLen] != 0) {
+        keyLen++;
+    }
 
-	//Thus, see above, but START at "Step 3", and END at "Step 1"
-	//And, instead of using "caesar_encrypt(char *plain, char *key)",
-		 //and "caesar_encrypt_char(char plain, int key)",
-	
-	//Use "caesar_decrypt(char *cipher, char *key)",
-		//and "caesar_decrypt_char(char cipher, int key)" respectively.
-//SEE GITHUB FOR DECRYPTION METHODS!!!
-
-
-char augustus_decrypt(char cipher, int key) {
-    //Create a char "decChar" to hold the decrypted version of "cipher".
-    char decChar;
-
-    //Create a char "lowerBound" to hold the bottom of one of these ranges.
-    char lowerBound;
-
-    //Create a char "upperBound" to hold the top of one of these ranges.
-    char upperBound;
-
-    //If the character ranges from 'a' to 'z',
-    if((cipher >= 'a') && (cipher <= 'z')) {
-        lowerBound = 'a';
-        upperBound = 'z';
-    }else if ((cipher >= 'A') && (cipher <= 'Z')) {
-    //Otherwise, if the character ranges from 'A' to 'Z',
-        lowerBound = 'A';
-        upperBound = 'Z';
+    //Find the length of plain
+    int cipherLen = 0;
+    while(cipher[cipherLen] != 0) {
+        cipherLen++;
     }
     
+    char *decStrA = malloc(cipherLen + 1);
 
-    //Otherwise, if the character ranges from '!' to ';',
-    else if ((cipher >= '!') && (cipher <= ';')) {
-        lowerBound = '!';
-        upperBound = ';';
-    }else {
-    //Otherwise, the character cannot be decrypted. Return "cipher". This is the fail safe boii
-        return cipher;
+    char keyDigit;
+    char *keyPointer;
+    int keyDigit;
+    
+    int k  = 0;
+    for(int i = 0; i < cipherLen; i++) {
+        
+        while(k < keyLen){
+            keyDigit = key[k];
+            keyPointer = &keyDigit;
+            keyDigit = convert_key(keyPointer);
+            decStrA[i] = caesar_decrypt_char(cipher, keyDigit);
+            i++;
+            k++;
+        }
+        k = 0;
     }
 
-    //Now, if decrypting the character goes below "lowerBound",
-    if((cipher - key) < lowerBound) {
-
-        //Wrap the character around to the end of the range.
-        decChar = cipher - key + 26;
-//        printf("\nDecrypting %c goes below %c, so it's wrapped around to %c\n", cipher, lowerBound, decChar);
-    }else {
-    //Otherwise, decrypt "cipher" normally.
-        decChar = cipher - key;
-    }
-
-//    printf("The decrypted char is %c\n", decChar);
-    return decChar;
+    char *decStrB = malloc(cipherLen + 1);
+    decStrB = caesar_decrypt(plain, key);
+    
+    return decStrB;
 
 }
-
-
-//delete this after char augustus_decrypt is done
-/*
-char *augustus_decrypt(char *cipher, char *key) {
-
-	//Placeholder code so the functions don't break.
-	char *placeholder = "Placeholder String";
-	return placeholder;
-}
- */
-
