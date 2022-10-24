@@ -38,91 +38,30 @@ char *Augustus_encrypt(char *plain, char *key) {
     //Create a char pointer "encStr" to hold the encrypted string
     char *encStrA = malloc(plainLen + 1);
 
-
-    //Call "Augustus_encrypt_char(char plain, int key)" to encrypt each character of "plain"
+    encStrA = caesar_encrypt(plain, key);
+    char *encStrB = malloc(encStrA + 1);
+    
+    char keyDigit;
+    char *keyPointer;
+    int keyDigit;
+    
+    int k  = 0;
     for(int i = 0; i < plainLen; i++) {
-        encStrA[i] = Augustus_encrypt_char(plain[i], trueKey);
+        
+        while(k < keyLen){
+            keyDigit = key[k];
+            keyPointer = &keyDigit;
+            keyDigit = convert_key(keyPointer);
+            encStrB[i] = caesar_encrypt_char(encStrA[i], keyDigit);
+            i++;
+            k++;
+        }
+        k = 0;
     }
-
-    char *caesarStr =encStrA;
     
-    //return afterrrr going throught the second part
-
+    return encStrB;
 }
 
-
-
-char Augustus_encrypt_char(char plain, int key) {
-    //Only three sets of characters can be encrypted: 'a' to 'z', 'A' to 'Z', and '!' to ';'
-        //For example, spaces aren't encrypted
-        //For example, if you're encrypting y with a key of 7, y must wrap around to f
-
-    //encChar to hold the encrypted version
-    char encChar;
-
-    //lowerBound to hold the bottom
-    char lowerBound;
-
-    //upperBound to hold the top
-    char upperBound;
-
-    //If the character ranges from 'a' to 'z',
-    if((plain >= 'a') && (plain <= 'z')) {
-        lowerBound = 'a';
-        upperBound = 'z';
-    }
-
-    //Otherwise, if the character ranges from 'A' to 'Z',
-    else if ((plain >= 'A') && (plain <= 'Z')) {
-        lowerBound = 'A';
-        upperBound = 'Z';
-    }
-
-    //Otherwise, if the character ranges from '!' to ';',
-    else if ((plain >= '!') && (plain <= ';')) {
-        lowerBound = '!';
-        upperBound = ';';
-    }
-
-    //Otherwise, the character cannot be encrypted. Return "plain".
-    else {
-        return plain;
-    }
-
-    //Now, if encrypting the character exceeds "upperBound",
-    if((plain + key) > upperBound) {
-
-        //Wrap the character around to the beginning of the range.
-        encChar = plain + key - 26;
-//        printf("\nEncrypting %c exceeds %c, so it's wrapped around to %c\n", plain, upperBound, encChar);
-    }
-    
-    //Otherwise, encrypt "plain" normally.
-    else {
-        encChar = plain + key;
-    }
-    
-    //make the key into an array
-    
-    //end of ceaser,  now add Augustus
-    f((encChar + key) > upperBound) {
-        encChar = encChar + key - 26;
-    }
-    
-
-//    printf("The encrypted char is %c\n", encChar);
-
-    return encChar;
-}
-
-			
-//delete this after char Augustus_encrypt_char(char plain, int key) is done
-/*char *augustus_encrypt(char *plain, char *key) {
-
-	//Placeholder code so the functions don't break.
-	char *placeholder = "Placeholer String";
-	return placeholder;
-}*/
 
 
 //Augustus decryption is the opposite of Augustus encryption.
@@ -137,11 +76,6 @@ char Augustus_encrypt_char(char plain, int key) {
 
 
 char augustus_decrypt(char cipher, int key) {
-    //first un-do augustus then ceaser
-    
-    
-    
-    
     //Create a char "decChar" to hold the decrypted version of "cipher".
     char decChar;
 
@@ -197,5 +131,4 @@ char *augustus_decrypt(char *cipher, char *key) {
 	return placeholder;
 }
  */
-
 
